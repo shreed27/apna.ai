@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PaymentNotificationListenerService extends NotificationListenerService {
-    private static final String TAG = "YoupiNotifListener";
+    private static final String TAG = "ApnaNotifListener";
     private ApiClient apiClient;
 
     private static final Pattern AMOUNT_PATTERN = Pattern.compile("(?:Rs\\.?|INR|₹)\\s*([0-9,]+(?:\\.[0-9]{1,2})?)", Pattern.CASE_INSENSITIVE);

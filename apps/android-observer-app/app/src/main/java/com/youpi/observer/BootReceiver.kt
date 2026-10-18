@@ -7,18 +7,18 @@ import android.util.Log
 
 /**
  * BroadcastReceiver that triggers upon device boot (RECEIVE_BOOT_COMPLETED).
- * Automatically restarts the YOUPI Observer service and heartbeat scheduler.
+ * Automatically restarts the Apna Observer service and heartbeat scheduler.
  */
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == Intent.ACTION_BOOT_COMPLETED || intent?.action == Intent.ACTION_MY_PACKAGE_REPLACED) {
-            Log.i("YoupiBootReceiver", "Device boot detected. Restarting YOUPI Payment Observer...")
+            Log.i("ApnaBootReceiver", "Device boot detected. Restarting Apna Payment Observer...")
             context?.let { ctx ->
                 val apiClient = ApiClient(ctx)
                 if (apiClient.isPaired()) {
                     val scheduler = HeartbeatScheduler(ctx)
                     scheduler.start()
-                    Log.i("YoupiBootReceiver", "YOUPI Payment Observer successfully re-armed on boot.")
+                    Log.i("ApnaBootReceiver", "Apna Payment Observer successfully re-armed on boot.")
                 }
             }
         }

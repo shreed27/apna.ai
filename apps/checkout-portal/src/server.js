@@ -40,6 +40,11 @@ export class CheckoutServer {
     } catch {}
 
     this.apiBaseUrl = options.apiBaseUrl || process.env.BASE_PAYMENT_API_URL || 'http://localhost:6100';
+    const localStorePort = Number(process.env.COIN_STORE_PORT || 5000);
+    const isProduction = String(process.env.YOUPI_MODE || process.env.NODE_ENV || '').toLowerCase() === 'production';
+    this.defaultStoreUrl = options.storeUrl || process.env.BASE_STORE_URL ||
+      (isProduction ? '' : `http://localhost:${localStorePort}/`);
+    this.checkoutPort = Number(process.env.CHECKOUT_PORTAL_PORT || 7000);
     this.htmlTemplatePath = path.join(__dirname, 'views', 'checkout.html');
     this.sdkScriptPath = path.join(__dirname, 'sdk', 'youpi-checkout.js');
     this.template = fs.readFileSync(this.htmlTemplatePath, 'utf8');
@@ -65,8 +70,8 @@ export class CheckoutServer {
 
     let html = this.template;
 
-    const appName = state?.branding?.appName || 'YouPI PG';
-    const primaryColor = state?.branding?.primaryColor || '#0b63e5';
+    const appName = state?.branding?.appName || 'Apna.ai';
+    const primaryColor = state?.branding?.primaryColor || '#244bd0';
     const merchantName = state?.merchantName || 'Merchant Checkout';
     const orderId = state?.orderId || '';
     const logoUrl = state?.branding?.logoUrl || '';
@@ -104,6 +109,8 @@ export class CheckoutServer {
 
     html = html.replaceAll('{{PAYMENT_ID}}', paymentId);
     html = html.replaceAll('{{API_BASE_URL}}', clientApiBase);
+    html = html.replaceAll('{{DEFAULT_STORE_URL_JSON}}', JSON.stringify(this.defaultStoreUrl).replaceAll('<', '\\u003c'));
+    html = html.replaceAll('{{CHECKOUT_PORTAL_PORT}}', String(this.checkoutPort));
     html = html.replaceAll('{{APP_NAME}}', appName);
     html = html.replaceAll('{{PRIMARY_COLOR}}', primaryColor);
     html = html.replaceAll('{{MERCHANT_NAME}}', merchantName);
@@ -175,8 +182,8 @@ export class CheckoutServer {
         return;
       }
 
-      // Official SDK script: GET /youpi.js or /sdk/youpi-checkout.js
-      if (pathname === '/youpi.js' || pathname === '/sdk/youpi.js' || pathname === '/sdk/youpi-checkout.js') {
+      // Official SDK script: GET /Apna.js or /sdk/Apna-checkout.js
+      if (['/Apna.js', '/sdk/Apna.js', '/sdk/Apna-checkout.js', '/youpi.js', '/sdk/youpi.js', '/sdk/youpi-checkout.js'].includes(pathname)) {
         try {
           const resolvedSdkPath = fs.existsSync(path.join(__dirname, 'sdk', 'youpi.js'))
             ? path.join(__dirname, 'sdk', 'youpi.js')

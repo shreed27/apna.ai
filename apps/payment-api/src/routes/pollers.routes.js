@@ -162,7 +162,7 @@ export function registerPollerRoutes(server, ctx) {
     }
 
     if (body.version && body.version !== 'v1') {
-      HttpServer.json(res, 400, { error: 'INVALID YOUPI PAIRING QR' });
+      HttpServer.json(res, 400, { error: 'INVALID Apna PAIRING QR' });
       return;
     }
 
@@ -539,4 +539,5 @@ export function registerPollerRoutes(server, ctx) {
 
   server.get('/api/v1/admin/sms-gateway/download-apk', serveApk);
   server.get('/youpi-sms-gateway.apk', serveApk);
+  server.get('/Apna-sms-gateway.apk', serveApk);
 }

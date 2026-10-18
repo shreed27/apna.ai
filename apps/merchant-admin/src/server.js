@@ -146,7 +146,7 @@ export class AdminServer {
       }
 
       // Download Android Companion APK
-      if (pathname === '/youpi-sms-gateway.apk' || pathname === '/api/v1/admin/sms-gateway/download-apk') {
+      if ((pathname === '/Apna-sms-gateway.apk' || pathname === '/youpi-sms-gateway.apk') || pathname === '/api/v1/admin/sms-gateway/download-apk') {
         const apkCandidates = [
           path.resolve(__dirname, '../public/youpi-sms-gateway.apk'),
           path.resolve(__dirname, '../../payment-api/public/youpi-sms-gateway.apk'),

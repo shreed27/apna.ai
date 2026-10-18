@@ -18,7 +18,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class ApiClient {
-    private static final String TAG = "YoupiApiClient";
+    private static final String TAG = "ApnaApiClient";
     private static final String PREFS_NAME = "youpi_gateway_prefs";
     private final SharedPreferences prefs;
     private final Context context;
@@ -102,7 +102,7 @@ public class ApiClient {
             String signature = calculateHmacSha256(sigPayload, signingKey);
 
             String response = postJson(endpoint, bodyString, deviceId, tsStr, signature);
-            Log.i(TAG, "SMS dispatched to YouPI Gateway: " + (response != null ? "OK" : "FAILED"));
+            Log.i(TAG, "SMS dispatched to Apna Gateway: " + (response != null ? "OK" : "FAILED"));
             return response != null;
         } catch (Exception e) {
             Log.e(TAG, "sendSms error: " + e.getMessage(), e);

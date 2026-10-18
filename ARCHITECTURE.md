@@ -1,15 +1,15 @@
 # ARCHITECTURE.md — Canonical System Architecture & Engineering Blueprint
 
-> **YOUPI PG V2**  
-> *Sovereign • Self-Hosted • Zero-Fee • Deterministic UPI Payment Gateway Suite*  
-> **Architecture Reference:** Production Specification V2  
+> **Apna.ai**
+> *Sovereign • Self-Hosted • Zero-Fee • Deterministic UPI Payment Gateway Suite*
+> **Architecture Reference:** Production Specification V2
 > **Runtime Target:** Node.js `>= 20.0.0` (ESM Native) • SQLite WAL • Android Kotlin
 
 ---
 
 ## 1. Executive Summary & Mission Statement
 
-**YOUPI PG** is a sovereign, self-hosted, white-label UPI and multi-modal payment gateway engineered for small-scale merchants, digital creators, and independent businesses in India.
+**Apna.ai** is a sovereign, self-hosted, white-label UPI and multi-modal payment gateway engineered for small-scale merchants, digital creators, and independent businesses in India.
 
 ### The Problem It Solves
 Traditional Indian payment aggregators (Razorpay, Cashfree, PayU, Paytm) impose:
@@ -18,8 +18,8 @@ Traditional Indian payment aggregators (Razorpay, Cashfree, PayU, Paytm) impose:
 3. **Arbitrary Account Freezes:** Unilateral merchant fund withholding and sudden KYC lockdowns.
 4. **Phone Spoofing & Fraud:** Fraudulent orders placed using arbitrary fake phone numbers.
 
-### The YOUPI PG Solution
-YOUPI PG eliminates the aggregator intermediary completely:
+### The Apna.ai Solution
+Apna.ai eliminates the aggregator intermediary completely:
 - **0% Transaction Fees Forever:** Payments are settled directly into the merchant's bank account via peer-to-peer (P2P) UPI rails.
 - **Sub-Second Direct Settlement:** Zero holdbacks. Funds land in the merchant's account instantly.
 - **Deterministic Bank Observation:** Uses incoming cellular Bank SMS and Gmail notifications to verify payment credits cryptographically without official banking API licenses.
@@ -30,7 +30,7 @@ YOUPI PG eliminates the aggregator intermediary completely:
 
 ## 2. Core Architectural Invariants
 
-Every subsystem in YOUPI PG adheres to eight strict mathematical and operational invariants:
+Every subsystem in Apna.ai adheres to eight strict mathematical and operational invariants:
 
 ### Invariant 1 — Deterministic Amount-Only Attribution
 Payment attribution enforces a strict equality invariant:
@@ -69,7 +69,7 @@ The active production persistence layer uses Node.js native `node:sqlite` (`Data
 - Zero Docker container overhead.
 
 ### Invariant 8 — Zero-Config Database Auto-Provisioning
-On first system boot or after cloning, YOUPI PG guarantees zero-config database provisioning:
+On first system boot or after cloning, Apna.ai guarantees zero-config database provisioning:
 - Automatically detects if `data/youpi_pg.sqlite` and core tables exist (`SELECT count(*) FROM sqlite_master WHERE type='table' AND name='merchants'`).
 - If missing, creates the parent directory `data/` and runs all schema DDL and baseline seeds idempotently before accepting HTTP traffic.
 - Eliminates manual database creation scripts and avoids runtime `SqliteError: no such table` crashes entirely.
@@ -89,7 +89,7 @@ flowchart TB
     subgraph GatewayFrontend["Gateway Frontend Services"]
         CheckoutPortal["Checkout Portal (Port 7000)<br/>• Dynamic Vector UPI QR<br/>• WhatsApp OTP Modal<br/>• Decoupled Dual Timers<br/>• Mobile Bottom Sheet"]
         AdminDashboard["Merchant Admin Panel (Port 6001)<br/>• White-Label Customizer<br/>• Cashier Till Dock<br/>• Live VPA Slot Hub<br/>• WhatsApp Pairing"]
-        DemoStore["YOUPI Showcase Store (Port 5000)<br/>• Enterprise Gateway PDP<br/>• 5 Outcome Demos<br/>• Developer Guide"]
+        DemoStore["Apna Showcase Store (Port 5000)<br/>• Enterprise Gateway PDP<br/>• 5 Outcome Demos<br/>• Developer Guide"]
     end
 
     subgraph CoreBackend["Payment Core REST Engine (Port 6100)"]
@@ -114,7 +114,7 @@ flowchart TB
     end
 
     BuyerBrowser -->|Interacts with| CheckoutPortal
-    MerchantStore -->|SDK Embed / youpi.js| CheckoutPortal
+    MerchantStore -->|SDK Embed / Apna.js| CheckoutPortal
     CashierPOS -->|Approves Till Cash/Card| AdminDashboard
 
     CheckoutPortal -->|REST & SSE Stream| APIEndpoints
@@ -156,19 +156,19 @@ stateDiagram-v2
     [*] --> INITIATED : Merchant creates checkout session
     INITIATED --> AUTH_PENDING : Customer arrives at portal
     AUTH_PENDING --> AUTHENTICATED : WhatsApp OTP verified
-    
+
     AUTHENTICATED --> ACTIVE : Slot available (is_slot_busy = 0)
     AUTHENTICATED --> QUEUED : Slot occupied (assigned FIFO position #1, #2...)
-    
+
     QUEUED --> ACTIVE : Prior session completes or expires
-    
+
     ACTIVE --> PROCESSING : Customer clicks "Payment Done" (30s timer)
     ACTIVE --> EXPIRED : 5:00 payment window elapses
     ACTIVE --> CANCELLED : Customer cancels session
-    
+
     PROCESSING --> SUCCESS : Bank credit verified (L1/L2/L3)
     PROCESSING --> FAILED : 30s expires with zero credit match
-    
+
     SUCCESS --> [*]
     FAILED --> [*]
     EXPIRED --> [*]
@@ -184,17 +184,17 @@ const account = db.prepare('SELECT is_slot_busy FROM payment_receiving_accounts 
 if (!account.is_slot_busy) {
   // Acquire Slot Immediately
   db.prepare('UPDATE payment_receiving_accounts SET is_slot_busy = 1 WHERE id = ?').run(accountId);
-  db.prepare(`UPDATE payment_sessions SET 
-    status = 'ACTIVE', 
+  db.prepare(`UPDATE payment_sessions SET
+    status = 'ACTIVE',
     expires_at = datetime('now', '+5 minutes'),
     activated_at = datetime('now')
     WHERE id = ?`).run(sessionId);
 } else {
   // Enqueue Customer
   const nextPos = db.prepare('SELECT COALESCE(MAX(queue_position), 0) + 1 AS pos FROM payment_sessions WHERE receiving_account_id = ? AND status = "QUEUED"').get(accountId).pos;
-  db.prepare(`UPDATE payment_sessions SET 
-    status = 'QUEUED', 
-    queue_position = ? 
+  db.prepare(`UPDATE payment_sessions SET
+    status = 'QUEUED',
+    queue_position = ?
     WHERE id = ?`).run(nextPos, sessionId);
 }
 db.exec('COMMIT');
@@ -212,7 +212,7 @@ To prevent phone spoofing, bots, and unauthenticated slot exhaustion, customer i
 ---
 
 ### 4.3 Tri-Channel Banking Observation Engine
-YOUPI PG captures bank credit alerts across three redundant layers:
+Apna.ai captures bank credit alerts across three redundant layers:
 
 | Layer | Component | Mechanism | Security & Integrity |
 | :--- | :--- | :--- | :--- |
@@ -237,11 +237,11 @@ Every incoming observation passes through `ObservationNormalizer`:
 ```mermaid
 graph TD
     GatewayMode[Operational Modality]
-    
+
     GatewayMode --> OnlineMode[Online Selling Mode]
     OnlineMode --> OnlineUPI[UPI Vector QR Code]
     OnlineMode --> OnlineCOD[Cash on Delivery with WhatsApp Pre-Verification]
-    
+
     GatewayMode --> OfflineMode[Offline Store Counter Mode]
     OfflineMode --> OfflineUPI[Customer-Facing Dynamic QR]
     OfflineMode --> OfflineCash[Cash at Till Desk - CASH_COUNTER]
@@ -258,27 +258,27 @@ graph TD
 
 ---
 
-### 4.5 Universal Merchant Integration (`youpi.js`)
+### 4.5 Universal Merchant Integration (`Apna.js`)
 
-YOUPI PG distributes a single, framework-independent universal browser bundle: [`/youpi.js`](apps/checkout-portal/src/sdk/youpi.js).
+Apna.ai distributes a single, framework-independent universal browser bundle: [`/Apna.js`](packages/merchant-sdk/src/youpi-checkout.js).
 
 #### 1. Zero-JS Declarative Button Embedding
 Merchants add the script and declarative attributes to any HTML button:
 ```html
-<script src="https://pay.yourdomain.com/youpi.js" data-youpi-key="MERCHANT_PUBLIC_KEY"></script>
+<script src="https://pay.yourdomain.com/Apna.js" data-apna-key="MERCHANT_PUBLIC_KEY"></script>
 
-<button data-youpi-pay
+<button data-apna-pay
         data-order-id="ORD-1001"
         data-amount="499.00"
         data-currency="INR">
-  Buy Now with YOUPI PG
+  Buy Now with Apna.ai
 </button>
 ```
 
-#### 2. Programmatic Invocation (`Youpi.pay`)
+#### 2. Programmatic Invocation (`Apna.pay`)
 For SPAs (React, Next.js, Vue, Nuxt, Angular):
 ```javascript
-window.Youpi.pay({
+window.Apna.pay({
   checkoutUrl: session.checkoutUrl,
   order_id: 'ORD-1001',
   amount: 499.00,
@@ -297,11 +297,11 @@ window.Youpi.pay({
 
 #### 3. Standardized Browser DOM CustomEvents
 Driven directly on `window` for reactive UI animations:
-- `youpi:payment:success` (`e.detail: { order_id, amount_received, utr }`)
-- `youpi:payment:failed` (`e.detail: { order_id, reason }`)
-- `youpi:payment:suspicious` (`e.detail: { order_id }`)
-- `youpi:payment:expired` (`e.detail: { order_id }`)
-- `youpi:payment:cancelled` (`e.detail: { order_id }`)
+- `Apna:payment:success` (`e.detail: { order_id, amount_received, utr }`)
+- `Apna:payment:failed` (`e.detail: { order_id, reason }`)
+- `Apna:payment:suspicious` (`e.detail: { order_id }`)
+- `Apna:payment:expired` (`e.detail: { order_id }`)
+- `Apna:payment:cancelled` (`e.detail: { order_id }`)
 
 #### 4. Authoritative Webhook Security Contract
 Frontend browser events are never trusted for order fulfillment or provisioning digital goods. Order completion requires verifying the authoritative server-to-server webhook:
@@ -314,7 +314,7 @@ Frontend browser events are never trusted for order fulfillment or provisioning 
 ```javascript
 import crypto from 'node:crypto';
 
-app.post('/api/youpi-webhook', express.raw({ type: 'application/json' }), (req, res) => {
+app.post('/api/Apna-webhook', express.raw({ type: 'application/json' }), (req, res) => {
   const signature = req.headers['x-gateway-signature'] || '';
   const secret = process.env.YOUPI_WEBHOOK_SECRET;
   const expected = 'sha256=' + crypto.createHmac('sha256', secret).update(req.body).digest('hex');
@@ -335,7 +335,7 @@ app.post('/api/youpi-webhook', express.raw({ type: 'application/json' }), (req, 
 ---
 
 ### 4.6 5 Standardized Merchant Outcome Pages
-To prevent broken 404 links and inconsistent customer experiences, YOUPI PG provides 5 canonical outcome pages served from Port 5000:
+To prevent broken 404 links and inconsistent customer experiences, Apna.ai provides 5 canonical outcome pages served from Port 5000:
 1. **`/order-success`:** Confirmed bank credit, displays verified UTR, provisions license/digital product.
 2. **`/order-failed`:** Informs buyer that verification timed out and confirms zero funds were deducted.
 3. **`/order-suspicious`:** Flagged by fraud heuristics; order held for manual merchant audit.
@@ -351,7 +351,7 @@ Configured via Tab 5 of the Merchant Admin dashboard and persisted in `merchants
 - **Custom Accent Color (`--primary`) & Header Gradients**
 - **Trust Badges & Security Sub-banners**
 - **Cloudflare Tunnel Custom Domain Binding (`pay.yourdomain.com`)**
-- **Complete Removal of "Powered by YouPI PG" Attribution**
+- **Complete Removal of "Powered by Apna.ai" Attribution**
 
 ---
 
@@ -390,7 +390,7 @@ data/youpi_pg.sqlite
 
 ## 7. Verification & Quality Assurance Suite
 
-YOUPI PG enforces zero regression via a unified test runner:
+Apna.ai enforces zero regression via a unified test runner:
 ```bash
 node scripts/test-all.js
 ```

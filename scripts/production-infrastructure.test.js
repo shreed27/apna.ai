@@ -12,7 +12,7 @@ import {
 } from '@youpi/common';
 import { Database, runMigrations, MerchantRepository, DeviceRepository } from '@youpi/db';
 
-describe('YOUPI PG V2 — Production Infrastructure Finalization (Part L Acceptance Tests)', () => {
+describe('Apna.ai — Production Infrastructure Finalization (Part L Acceptance Tests)', () => {
   // ============================================================
   // GROUP 1: CLOUDFLARE TUNNEL CONFIGURATION (Acceptance 1 - 12)
   // ============================================================
@@ -235,7 +235,7 @@ describe('YOUPI PG V2 — Production Infrastructure Finalization (Part L Accepta
       const badVersion = { ...validPayload, version: 'v999' };
       const checkBadVersion = validatePairingPayload(badVersion);
       assert.equal(checkBadVersion.valid, false);
-      assert.equal(checkBadVersion.error, 'INVALID YOUPI PAIRING QR VERSION');
+      assert.equal(checkBadVersion.error, 'INVALID Apna PAIRING QR VERSION');
 
       // Malformed URL
       const badUrl = { ...validPayload, serverUrl: 'not_a_valid_url' };

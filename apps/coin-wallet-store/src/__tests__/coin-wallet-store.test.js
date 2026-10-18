@@ -76,7 +76,7 @@ describe('Coin Top-Up Wallet Demo Store Integration Tests', () => {
     assert.equal(res.body.coins, 50);
   });
 
-  test('GET / renders YOUPI Store product page with gateway showcase and demo checkout', async () => {
+  test('GET / renders Apna Shop product page with gateway showcase and demo checkout', async () => {
     const res = await request('/');
     assert.equal(res.status, 200);
     assert.ok(res.body.includes('Self-Hosted UPI Payment Gateway'));
@@ -160,7 +160,7 @@ describe('Coin Top-Up Wallet Demo Store Integration Tests', () => {
   test('GET /wallet renders wallet page with updated balance', async () => {
     const res = await request('/wallet?orderId=COIN-ORD-555');
     assert.equal(res.status, 200);
-    assert.ok(res.body.includes('Customer Account') || res.body.includes('YOUPI Store'));
+    assert.ok(res.body.includes('Customer Account') || res.body.includes('Apna Shop'));
     assert.ok(res.body.includes('Top-Up Successful!'));
     assert.ok(res.body.includes('Current Vault Balance'));
   });
@@ -317,7 +317,7 @@ describe('Coin Top-Up Wallet Demo Store Integration Tests', () => {
     assert.ok(res.body.includes('ORD-SUCC-123'));
     assert.ok(res.body.includes('499.00'));
     assert.ok(res.body.includes('998877665544'));
-    assert.ok(res.body.includes('VERIFIED BY YOUPI PG'));
+    assert.ok(res.body.includes('VERIFIED BY Apna.ai'));
   });
 
   test('GET /order-suspicious renders held for review security notice', async () => {
@@ -342,11 +342,11 @@ describe('Coin Top-Up Wallet Demo Store Integration Tests', () => {
     assert.ok(res.body.includes('ORD-CAN-000'));
   });
 
-  test('GET /youpi.js is served with CORS for universal frontend integration', async () => {
-    const res = await request('/youpi.js');
+  test('GET /Apna.js is served with CORS for universal frontend integration', async () => {
+    const res = await request('/Apna.js');
     assert.equal(res.status, 200);
     assert.ok(res.body.includes('YoupiCheckout'));
-    assert.ok(res.body.includes('data-youpi-pay'));
+    assert.ok(res.body.includes('data-apna-pay'));
   });
 
   test('Reverse proxy: proxies /api/v1/* requests to payment API directly', async () => {

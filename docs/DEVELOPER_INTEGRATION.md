@@ -1,286 +1,92 @@
-# YOUPI PG V2 — Developer Integration Guide
+# Apna.ai Developer Guide
 
-Welcome to the official developer integration guide for **YOUPI PG V2**.
+Apna exposes a local MCP integration for creating a hosted payment link and QR from an AI assistant. This is the easiest way to try the payment flow without writing a website integration.
 
-YOUPI PG V2 provides a **Universal One-Script Integration** that allows any web application to accept UPI payments with zero aggregator fees, sub-second QR rendering, and automated SMS/Gmail observation verification.
+> **Current scope:** The MCP creates one-time payment links and checks payment status. It does not create a full business website, manage a product catalog, onboard a merchant, configure a payout account, or provide a public Apna-hosted signup service. Those steps still require a configured Apna instance and merchant account.
 
----
+## Use Apna from an MCP client
 
-## 1. Quick Start (5-Minute Integration)
+### 1. Start a configured Apna instance
 
-### Step 1: Add the Script
-Include the official script in your HTML:
+Run the API and checkout portal using the [installation guide](INSTALLATION.md). Configure the merchant's receiving UPI account in Merchant Admin and confirm the checkout portal has a browser-reachable URL. The default local ports are API `6100`, checkout `7000`, and Merchant Admin `6001`; deployments may use different ports.
 
-```html
-<script 
-  src="https://<checkout-portal-host>/youpi.js" 
-  data-youpi-key="YOUR_MERCHANT_KEY">
-</script>
+For local testing, the API and checkout URLs may use `127.0.0.1`. A customer on another device cannot open a `localhost` checkout link. To share live links, Apna must be deployed on a reachable domain with HTTPS, and the merchant's checkout URL must point to that deployment.
+
+### 2. Install project dependencies
+
+From the repository root:
+
+```bash
+npm install
 ```
 
-*(For local testing, `<checkout-portal-host>` is `http://localhost:7000`)*
+### 3. Add the MCP server to your MCP client
 
-### Step 2: Add Your Payment Button
-Add the `data-youpi-pay` attribute to your payment button:
+Configure a local `stdio` MCP server. Replace `/absolute/path/to/YouPI-PG` with the directory where you cloned the repository, and replace the merchant ID with the merchant configured in your Apna database.
 
-```html
-<button 
-  data-youpi-pay 
-  data-order-id="ORDER-1001" 
-  data-amount="499">
-  Pay ₹499
-</button>
-```
-
-When clicked, the script automatically dims and blurs the page, pops up the centered 2-column modal (or fluid bottom sheet on mobile), and loads the checkout session.
-
----
-
-## 2. Button Attributes Reference
-
-| Attribute | Required | Description | Example |
-| :--- | :---: | :--- | :--- |
-| `data-youpi-pay` | **Yes** | Flags element as a YOUPI checkout trigger | *(boolean)* |
-| `data-amount` | **Yes** | Amount in INR | `"499.00"` |
-| `data-order-id` | Optional | Merchant order ID (auto-generated if omitted) | `"ORD-9988"` |
-| `data-currency` | Optional | Currency (defaults to `INR`) | `"INR"` |
-| `data-name` | Optional | Brand / Store display name | `"Acme Store"` |
-| `data-description` | Optional | Order description in checkout | `"Digital Coins"` |
-| `data-customer-name` | Optional | Customer full name | `"Mohit Kumar"` |
-| `data-customer-email` | Optional | Customer email | `"mohit@example.com"` |
-| `data-customer-phone` | Optional | Customer mobile number (WhatsApp auth) | `"9876543210"` |
-| `data-metadata` | Optional | JSON string of custom developer metadata | `'{"plan":"pro"}'` |
-| `data-success-url` | Optional | Redirect URL on payment success | `"/order-success"` |
-| `data-failed-url` | Optional | Redirect URL on payment failure | `"/order-failed"` |
-| `data-suspicious-url`| Optional | Redirect URL if flagged as suspicious | `"/order-suspicious"` |
-| `data-expired-url` | Optional | Redirect URL on session expiry | `"/order-expired"` |
-| `data-cancelled-url`| Optional | Redirect URL on user cancellation | `"/order-cancelled"` |
-
----
-
-## 3. Programmatic Usage (`Youpi.pay`)
-
-For Single Page Applications (React, Vue, Angular, Svelte, Next.js):
-
-```javascript
-Youpi.pay({
-  order_id: "ORDER-1001",
-  amount: 499.00,
-  currency: "INR",
-  customer: {
-    name: "Mohit Kumar",
-    email: "mohit@example.com",
-    phone: "9876543210"
-  },
-  metadata: {
-    sku: "SUBSCRIPTION-YEARLY",
-    user_id: "usr_42"
-  },
-  handler: function(response) {
-    console.log("Payment Confirmed:", response);
-    // { status: "SUCCESS", order_id: "ORDER-1001", amount_received: 499.00, utr: "123456789012", payment_mode: "UPI" }
-  },
-  onFailed: function(response) {
-    console.warn("Payment Failed:", response.reason);
-  },
-  onClose: function() {
-    console.log("Customer closed the checkout modal");
+```json
+{
+  "mcpServers": {
+    "apna": {
+      "command": "node",
+      "args": ["/absolute/path/to/YouPI-PG/apps/apna-mcp/src/index.js"],
+      "env": {
+        "APNA_API_URL": "http://127.0.0.1:6100",
+        "APNA_MERCHANT_ID": "your-merchant-uuid"
+      }
+    }
   }
-});
-```
-
----
-
-## 4. Frontend Browser Payment Events
-
-The script emits standard DOM `CustomEvent`s on `window`:
-
-```javascript
-// 1. Success Event
-window.addEventListener('youpi:payment:success', (e) => {
-  const { order_id, amount_received, utr, payment_mode } = e.detail;
-  console.log(`Order ${order_id} verified! Bank UTR: ${utr}`);
-});
-
-// 2. Failed Event
-window.addEventListener('youpi:payment:failed', (e) => {
-  console.log(`Order ${e.detail.order_id} failed: ${e.detail.reason}`);
-});
-
-// 3. Suspicious / Security Review Event
-window.addEventListener('youpi:payment:suspicious', (e) => {
-  console.warn(`Order ${e.detail.order_id} held for security review.`);
-});
-
-// 4. Session Expired Event
-window.addEventListener('youpi:payment:expired', (e) => {
-  console.log(`Order ${e.detail.order_id} active window expired.`);
-});
-
-// 5. Cancelled Event
-window.addEventListener('youpi:payment:cancelled', (e) => {
-  console.log(`Order ${e.detail.order_id} cancelled by customer.`);
-});
-```
-
-> **SECURITY NOTICE**: Browser events are designed strictly to update frontend user interfaces. Never mark an order fulfilled solely based on client-side events.
-
----
-
-## 5. Authoritative Backend Webhooks
-
-The only authoritative confirmation of payment is the **HMAC-SHA256 signed server-to-server webhook**.
-
-### Webhook Delivery Format:
-- **Headers**:
-  - `Content-Type: application/json`
-  - `X-Gateway-Event: SUCCESS`
-  - `X-Gateway-Signature: sha256=<hex_hmac_sha256>`
-  - `X-Gateway-Delivery-Id: <uuid>`
-  - `X-Gateway-Timestamp: <timestamp_ms>`
-- **Payload**:
-  ```json
-  {
-    "event": "SUCCESS",
-    "paymentId": "c7942127-14e3-469a-9e4a-9359a16f903a",
-    "orderId": "ORDER-1001",
-    "amount": "499.00",
-    "amountPaise": 49900,
-    "currency": "INR",
-    "method": "UPI",
-    "utr": "123456789012",
-    "completedAt": "2026-10-07T12:00:00.000Z",
-    "metadata": { "sku": "SUBSCRIPTION-YEARLY" }
-  }
-  ```
-
-### Verification Security Invariants:
-- **Raw Body Required**: Consumers **MUST** compute the HMAC over raw, unparsed request bytes. Never parse JSON before HMAC calculation.
-- **Constant-Time Comparison**: Protect against timing side-channel attacks by always using constant-time comparison functions:
-  - Node.js: `crypto.timingSafeEqual`
-  - Python: `hmac.compare_digest`
-  - PHP: `hash_equals`
-  - Go: `hmac.Equal`
-- **Signature Prefix**: Formatted as `X-Gateway-Signature: sha256=<64_char_hex_hash>`.
-
-### Verification Implementations:
-
-#### 1. Node.js (Express)
-```javascript
-import crypto from 'node:crypto';
-
-app.post('/api/youpi-webhook', express.raw({ type: 'application/json' }), (req, res) => {
-  const signature = req.headers['x-gateway-signature'] || '';
-  const secret = process.env.YOUPI_WEBHOOK_SECRET;
-  const expected = 'sha256=' + crypto.createHmac('sha256', secret).update(req.body).digest('hex');
-
-  if (signature.length !== expected.length ||
-      !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
-    return res.status(401).json({ error: 'Invalid webhook signature' });
-  }
-
-  const payload = JSON.parse(req.body.toString('utf8'));
-  if (payload.event === 'SUCCESS') {
-    // Fulfill order: payload.orderId, payload.utr, payload.amount, payload.amountPaise
-  }
-  res.status(200).json({ received: true });
-});
-```
-
-#### 2. Python (FastAPI)
-```python
-import hmac, hashlib, json
-from fastapi import FastAPI, Request, HTTPException
-
-app = FastAPI()
-
-@app.post("/api/youpi-webhook")
-async def youpi_webhook(request: Request):
-    raw_body = await request.body()
-    signature = request.headers.get("X-Gateway-Signature", "")
-    secret = request.app.state.webhook_secret.encode("utf-8")
-
-    expected = "sha256=" + hmac.new(secret, raw_body, hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(signature, expected):
-        raise HTTPException(status_code=401, detail="Invalid webhook signature")
-
-    payload = json.loads(raw_body.decode("utf-8"))
-    if payload.get("event") == "SUCCESS":
-        # Fulfill order: payload["orderId"], payload["utr"], payload["amount"]
-        pass
-    return {"received": True}
-```
-
-#### 3. PHP
-```php
-<?php
-$rawPayload = file_get_contents('php://input');
-$signature = $_SERVER['HTTP_X_GATEWAY_SIGNATURE'] ?? '';
-$secret = getenv('YOUPI_WEBHOOK_SECRET');
-
-$expected = 'sha256=' . hash_hmac('sha256', $rawPayload, $secret);
-
-if (!hash_equals($expected, $signature)) {
-    http_response_code(401);
-    exit(json_encode(['error' => 'Invalid webhook signature']));
-}
-
-$payload = json_decode($rawPayload, true);
-if (($payload['event'] ?? '') === 'SUCCESS') {
-    // Fulfill order: $payload['orderId'], $payload['utr'], $payload['amount']
-}
-
-http_response_code(200);
-echo json_encode(['received' => true]);
-?>
-```
-
-#### 4. Go (`net/http`)
-```go
-package main
-
-import (
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/hex"
-	"encoding/json"
-	"io"
-	"net/http"
-	"os"
-)
-
-func youpiWebhookHandler(w http.ResponseWriter, r *http.Request) {
-	rawBody, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "Cannot read body", http.StatusBadRequest)
-		return
-	}
-	defer r.Body.Close()
-
-	signature := r.Header.Get("X-Gateway-Signature")
-	secret := []byte(os.Getenv("YOUPI_WEBHOOK_SECRET"))
-
-	mac := hmac.New(sha256.New, secret)
-	mac.Write(rawBody)
-	expected := "sha256=" + hex.EncodeToString(mac.Sum(nil))
-
-	if !hmac.Equal([]byte(signature), []byte(expected)) {
-		http.Error(w, "Invalid webhook signature", http.StatusUnauthorized)
-		return
-	}
-
-	var payload struct {
-		Event       string `json:"event"`
-		OrderId     string `json:"orderId"`
-		UTR         string `json:"utr"`
-		Amount      string `json:"amount"`
-		AmountPaise int64  `json:"amountPaise"`
-	}
-	if err := json.Unmarshal(rawBody, &payload); err == nil && payload.Event == "SUCCESS" {
-		// Fulfill order: payload.OrderId, payload.UTR, payload.Amount
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"received":true}`))
 }
 ```
+
+Restart or reload the MCP client after saving its configuration. Keep the server configured as a local process; do not expose an unprotected payment API to the public internet.
+
+### 4. Ask the assistant
+
+Examples:
+
+- “Make a ₹250 payment link for a family meal.”
+- “Create a ₹99 link for order ORD-104.”
+- “Check the status of payment `<payment-id>`.”
+
+The assistant receives the hosted checkout URL and a QR image. The customer opens the hosted checkout and pays using an available method. `apna_get_payment_status` reports the current payment status; fulfill an order only when the authoritative status is `SUCCESS`.
+
+## Available MCP tools
+
+| Tool | What it does |
+| --- | --- |
+| `apna_create_payment_link` | Creates an INR one-time payment request and returns its hosted checkout URL and QR image. Requires an active receiving account for the configured merchant. |
+| `apna_get_payment_status` | Reads the public status, amount, order ID, and completion time for a payment ID. |
+
+The MCP process reads `APNA_API_URL` and `APNA_MERCHANT_ID` from its environment. The merchant ID selects the merchant; it is not a secret or an authentication credential. The current API does not provide a production merchant OAuth/API-key flow, so this local MCP is for a trusted, self-hosted Apna instance. Do not treat the merchant ID as a security boundary.
+
+## Integrate a website with the API
+
+For an existing online store, create the payment from the store's **server-side** code:
+
+```http
+POST https://<your-apna-api-domain>/api/v1/payments
+Content-Type: application/json
+X-Merchant-Id: <merchant-id>
+Idempotency-Key: <unique-request-key>
+
+{
+  "orderId": "ORDER-1001",
+  "amount": "499.00",
+  "currency": "INR",
+  "returnUrl": "https://shop.example/checkout/complete",
+  "metadata": { "sku": "TSHIRT-01" }
+}
+```
+
+The response includes `paymentId` and `checkoutUrl`. Redirect the customer to `checkoutUrl`. Never create orders from untrusted browser-supplied prices; calculate the amount on your server.
+
+There is also a Node.js client package and webhook example in [MERCHANT_INTEGRATION.md](MERCHANT_INTEGRATION.md). The browser checkout script described in [the legacy one-script guide](../AGENTS.md) is another option for sites that already have a backend.
+
+## Payment confirmation
+
+Treat browser redirects and browser events as user-interface signals only. For an online store, fulfill the order only after validating Apna's signed server-to-server webhook as described in [MERCHANT_INTEGRATION.md](MERCHANT_INTEGRATION.md). Use the payment API's `SUCCESS` status as the verified outcome; a QR being shown or a customer returning to the store does not mean payment succeeded.
+
+## What remains before “any merchant, one step”
+
+The current repo is a self-hosted gateway and demo, not yet a public multi-merchant product. A true no-code flow still needs hosted merchant registration, secure merchant authentication, payout-account onboarding, store/product page generation, public payment-link hosting, and support/operational tooling. The MCP is a first integration surface for payment links; it does not replace those platform capabilities.

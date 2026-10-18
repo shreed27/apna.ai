@@ -1,8 +1,8 @@
 {
-  "name": "youpi-pg",
+  "name": "apna-ai",
   "version": "1.0.0",
   "type": "module",
-  "description": "Self-Hosted White-Label UPI Payment Gateway with Payment Observation Engine",
+  "description": "Apna.ai — Free UPI Payments and Merchant Tools",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -29,6 +29,6 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "author": "Antigravity Systems",
+  "author": "Apna.ai",
   "license": "Commercial"
 }

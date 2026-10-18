@@ -6,7 +6,7 @@ import { extractIntelligentAmount, BankSmsParser, PaymentVerificationPipeline } 
 import { startServer as startPaymentApi } from '../index.js';
 import { PaymentStatus, PaymentMethod } from '@youpi/common';
 
-describe('YOUPI PG: Parser Rule Correction & Exact Fraud/Ban System (All 29 Acceptance Tests)', () => {
+describe('Apna.ai: Parser Rule Correction & Exact Fraud/Ban System (All 29 Acceptance Tests)', () => {
   let apiInstance;
   let baseUrl;
   let testDb;
@@ -359,7 +359,7 @@ describe('YOUPI PG: Parser Rule Correction & Exact Fraud/Ban System (All 29 Acce
       mobileNumber: '+919876543210'
     });
     const session = createActiveSession('ORD-FRAUD-14', 49900n, cust.id);
-    const rawFakeMessage = 'A/C credited with Rs 499.00 UPI Ref 112233445566 to YOUPI STORE';
+    const rawFakeMessage = 'A/C credited with Rs 499.00 UPI Ref 112233445566 to Apna Shop';
 
     const result = pipeline.process({
       source: 'SMS',
@@ -732,7 +732,7 @@ describe('YOUPI PG: Parser Rule Correction & Exact Fraud/Ban System (All 29 Acce
       body: {
         source: 'SMS',
         sender: '+919876543230',
-        rawText: 'A/C credited with Rs 499.00 UPI Ref 112233445566 to YOUPI STORE'
+        rawText: 'A/C credited with Rs 499.00 UPI Ref 112233445566 to Apna Shop'
       }
     });
 
@@ -778,7 +778,7 @@ describe('YOUPI PG: Parser Rule Correction & Exact Fraud/Ban System (All 29 Acce
       body: {
         source: 'GMAIL',
         sender: 'fakeemail31@test.com',
-        rawText: 'Your account has been credited with ₹999.00 ref 998877665544 to YOUPI STORE'
+        rawText: 'Your account has been credited with ₹999.00 ref 998877665544 to Apna Shop'
       }
     });
 

@@ -8,7 +8,7 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 public class SmsReceiver extends BroadcastReceiver {
-    private static final String TAG = "YoupiSmsReceiver";
+    private static final String TAG = "ApnaSmsReceiver";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -21,7 +21,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
         final ApiClient client = new ApiClient(context);
         if (!client.isPaired()) {
-            Log.w(TAG, "SMS received but device is not paired with YouPI Gateway. Skipping.");
+            Log.w(TAG, "SMS received but device is not paired with Apna Gateway. Skipping.");
             return;
         }
 
@@ -33,12 +33,12 @@ public class SmsReceiver extends BroadcastReceiver {
 
             Log.i(TAG, "Captured incoming SMS from [" + sender + "]: " + (body != null ? body.length() : 0) + " chars");
 
-            // Dispatch to YouPI Gateway in asynchronous worker thread
+            // Dispatch to Apna Gateway in asynchronous worker thread
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     boolean success = client.sendSms(sender, body, timestamp);
-                    Log.i(TAG, "Dispatched SMS to YouPI Gateway: " + (success ? "SUCCESS" : "FAILED"));
+                    Log.i(TAG, "Dispatched SMS to Apna Gateway: " + (success ? "SUCCESS" : "FAILED"));
                 }
             }).start();
         }

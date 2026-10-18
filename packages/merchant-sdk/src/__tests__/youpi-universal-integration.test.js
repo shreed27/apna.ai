@@ -2,9 +2,9 @@ import { test, describe, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { Database } from '@youpi/db';
 import { startServer as startPaymentApi } from '../../../../apps/payment-api/src/index.js';
-import { YoupiPaymentClient, YoupiCheckout, Youpi } from '../index.js';
+import { YoupiPaymentClient, YoupiCheckout, Apna } from '../index.js';
 
-describe('Universal YOUPI PG One-Script Integration Tests', () => {
+describe('Universal Apna.ai One-Script Integration Tests', () => {
   let apiInstance;
   let testDb;
 
@@ -18,16 +18,16 @@ describe('Universal YOUPI PG One-Script Integration Tests', () => {
     testDb.close();
   });
 
-  test('SDK exports both YoupiCheckout and Youpi aliases', () => {
+  test('SDK exports both YoupiCheckout and Apna aliases', () => {
     assert.ok(YoupiCheckout);
-    assert.ok(Youpi);
-    assert.equal(YoupiCheckout, Youpi);
-    assert.equal(typeof Youpi.pay, 'function');
-    assert.equal(typeof Youpi.open, 'function');
-    assert.equal(typeof Youpi.handleButtonClick, 'function');
+    assert.ok(Apna);
+    assert.equal(YoupiCheckout, Apna);
+    assert.equal(typeof Apna.pay, 'function');
+    assert.equal(typeof Apna.open, 'function');
+    assert.equal(typeof Apna.handleButtonClick, 'function');
   });
 
-  test('Youpi.pay creates payment session and resolves checkoutUrl on backend', async () => {
+  test('Apna.pay creates payment session and resolves checkoutUrl on backend', async () => {
     // Mock fetch for headless Node environment
     const orderId = `PAY-TEST-${Date.now()}`;
     const instance = new YoupiCheckout({
@@ -45,7 +45,7 @@ describe('Universal YOUPI PG One-Script Integration Tests', () => {
   test('Button attribute extractor correctly parses customer and metadata attributes', () => {
     // Mock DOM button element
     const mockAttrs = {
-      'data-youpi-pay': '',
+      'data-apna-pay': '',
       'data-order-id': 'ORD-BTN-101',
       'data-amount': '750',
       'data-currency': 'INR',

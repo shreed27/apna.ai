@@ -1,15 +1,15 @@
 <div align="center">
 
 ```
-██╗   ██╗ ██████╗ ██╗   ██╗██████╗ ██╗    ██████╗  ██████╗ 
-╚██╗ ██╔╝██╔═══██╗██║   ██║██╔══██╗██║    ██╔══██╗██╔════╝ 
+██╗   ██╗ ██████╗ ██╗   ██╗██████╗ ██╗    ██████╗  ██████╗
+╚██╗ ██╔╝██╔═══██╗██║   ██║██╔══██╗██║    ██╔══██╗██╔════╝
  ╚████╔╝ ██║   ██║██║   ██║██████╔╝██║    ██████╔╝██║  ███╗
   ╚██╔╝  ██║   ██║██║   ██║██╔═══╝ ██║    ██╔═══╝ ██║   ██║
    ██║   ╚██████╔╝╚██████╔╝██║     ██║    ██║     ╚██████╔╝
-   ╚═╝    ╚═════╝  ╚═════╝ ╚═╝     ╚═╝    ╚═╝      ╚═════╝ 
+   ╚═╝    ╚═════╝  ╚═════╝ ╚═╝     ╚═╝    ╚═╝      ╚═════╝
 ```
 
-# ⚡ YOUPI PG V2
+# ⚡ Apna.ai
 
 ### The Sovereign, Self-Hosted UPI Payment Gateway for Independent Merchants
 **0% Gateway Fees • Direct-to-Bank Settlement • WhatsApp Pre-Checkout OTP • Bank SMS & Gmail Observers**
@@ -29,7 +29,7 @@
 
 <p align="center">
   <a href="#-live-product-demos">Live Demos</a> •
-  <a href="#-the-problem-vs-the-youpi-solution">Why YOUPI?</a> •
+  <a href="#-the-problem-vs-the-Apna-solution">Why Apna?</a> •
   <a href="#-architecture-at-a-glance">Architecture</a> •
   <a href="#-key-features--superpowers">Superpowers</a> •
   <a href="#-quickstart-in-60-seconds">Quickstart</a> •
@@ -47,12 +47,12 @@
 
 ## 🎬 Live Product Demos
 
-See **YOUPI PG V2** live in action across Desktop and Mobile checkout flows:
+See **Apna.ai** live in action across Desktop and Mobile checkout flows:
 
 | 🖥️ Desktop Modal Flow | 📱 Mobile Drawer & App Switcher |
 | :---: | :---: |
 | <img src="assets/desktop-demo.gif" width="100%" alt="Desktop Checkout Demo" /><br/><sub>*Full end-to-end checkout: One-script modal, WhatsApp OTP, dynamic vector QR & bank observation.*</sub> | <img src="assets/mobile-demo.gif" width="60%" alt="Mobile Checkout Demo" /><br/><sub>*Ultra-responsive bottom drawer with 1-tap deep-link intent for GPay, PhonePe, Paytm & CRED.*</sub> |
-| • **Zero-JS One-Script Trigger**: Auto-binds to `[data-youpi-pay]`<br/>• **WhatsApp Pre-Checkout OTP**: Real-time 6-digit phone verification<br/>• **Dynamic Vector SVG QR**: Pure vector QR code with dual timers<br/>• **Automated Observer Credit**: Instant credit via bank SMS/Gmail | • **Responsive Bottom Drawer**: Native app-feel mobile UI<br/>• **Direct UPI App Deep-Linking**: GPay, PhonePe, Paytm, CRED<br/>• **Real-Time Payment Polling**: Instant status reflection<br/>• **Counter Desk Modalities**: Configurable Cash & Card fallback |
+| • **Zero-JS One-Script Trigger**: Auto-binds to `[data-apna-pay]`<br/>• **WhatsApp Pre-Checkout OTP**: Real-time 6-digit phone verification<br/>• **Dynamic Vector SVG QR**: Pure vector QR code with dual timers<br/>• **Automated Observer Credit**: Instant credit via bank SMS/Gmail | • **Responsive Bottom Drawer**: Native app-feel mobile UI<br/>• **Direct UPI App Deep-Linking**: GPay, PhonePe, Paytm, CRED<br/>• **Real-Time Payment Polling**: Instant status reflection<br/>• **Counter Desk Modalities**: Configurable Cash & Card fallback |
 
 <br/>
 
@@ -66,7 +66,7 @@ See **YOUPI PG V2** live in action across Desktop and Mobile checkout flows:
 
 Traditional payment gateways (Razorpay, Cashfree, PayU, Stripe) lock your revenue into high fees, multi-day settlement delays, and sudden compliance freezes:
 
-| Comparison Metric | Traditional Aggregators (Razorpay / Cashfree) | ⚡ YOUPI PG (Self-Hosted Sovereign) |
+| Comparison Metric | Traditional Aggregators (Razorpay / Cashfree) | ⚡ Apna.ai (Self-Hosted Sovereign) |
 | :--- | :--- | :--- |
 | **Transaction Fee** | **2.0% – 3.0% + 18% GST** per transaction | **0.0% (Zero Fees Forever)** |
 | **Settlement Speed** | **T+2 to T+3 Business Days** (Holdbacks) | **Instant (Direct into your Bank Account)** |
@@ -84,7 +84,7 @@ Traditional payment gateways (Razorpay, Cashfree, PayU, Stripe) lock your revenu
 
 ## 🏗️ Architecture at a Glance
 
-YOUPI PG converts your standard Indian personal or business UPI receiving accounts into an automated, zero-fee payment gateway by coupling **pure vector SVG QR codes** with an **automated multi-channel banking observation mesh**.
+Apna.ai converts your standard Indian personal or business UPI receiving accounts into an automated, zero-fee payment gateway by coupling **pure vector SVG QR codes** with an **automated multi-channel banking observation mesh**.
 
 ```mermaid
 flowchart LR
@@ -93,7 +93,7 @@ flowchart LR
         Cart[Checkout Button]
     end
 
-    subgraph Gateway["YOUPI Gateway Instance"]
+    subgraph Gateway["Apna Gateway Instance"]
         AuthGate[WhatsApp Berry Auth<br/>6-Digit OTP]
         Queue[Single-Slot FIFO Queue<br/>Deterministic Arbiter]
         VectorQR[ISO Vector QR Engine<br/>UPI URI]
@@ -111,7 +111,7 @@ flowchart LR
     end
 
     Buyer -->|Clicks Checkout| Cart
-    Cart -->|youpi.js Embed| AuthGate
+    Cart -->|Apna.js Embed| AuthGate
     AuthGate -->|Verified| Queue
     Queue -->|Active Slot| VectorQR
     VectorQR -->|Displays Dynamic QR| Buyer
@@ -140,7 +140,7 @@ Every rupee paid goes straight from your customer's bank account to your bank ac
 No more fake orders, bot spam, or fraudulent phone numbers. Before a customer can enter the checkout queue, the gateway delivers a cryptographically random 6-digit OTP directly to their WhatsApp app using the embedded Baileys/Berry Protocol socket. Verified customer profiles are remembered in browser `localStorage`.
 
 ### 3. 🔒 Deterministic Single-Slot FIFO Queue Engine
-Because standard UPI alerts do not carry arbitrary merchant metadata, multiple concurrent transactions with identical amounts could create attribution confusion. YOUPI PG solves this with a mathematical invariant:
+Because standard UPI alerts do not carry arbitrary merchant metadata, multiple concurrent transactions with identical amounts could create attribution confusion. Apna.ai solves this with a mathematical invariant:
 - **Only ONE customer can pay on a VPA at a time.**
 - Other buyers wait in a database-backed FIFO queue with live position streaming.
 - Guarantees **100% exact payment matching** with zero payment mismatch errors!
@@ -165,7 +165,7 @@ Rebrand the checkout portal completely through the Merchant Admin Panel:
 - Custom app name, logo URL, and browser favicon.
 - Tailored color palettes, custom gradients, and trust badges.
 - Custom domain binding via Cloudflare Tunnels (`pay.yourbrand.com`).
-- Complete removal of any "Powered by YouPI PG" attribution.
+- Complete removal of any "Powered by Apna.ai" attribution.
 
 ### 8. 🚦 5 Standardized Merchant Outcome Pages
 Never leave customers hanging with blank screens or 404 errors:
@@ -189,8 +189,8 @@ Never leave customers hanging with blank screens or 404 errors:
 ### 1. Clone & Install Dependencies
 Standard `npm install` works out-of-the-box across all packages and apps without any protocol issues:
 ```bash
-git clone https://github.com/gxurav1710/YouPI-PG.git youpi-pg
-cd youpi-pg
+git clone https://github.com/gxurav1710/YouPI-PG.git apna-ai
+cd apna-ai
 npm install
 ```
 
@@ -201,7 +201,7 @@ cp .env.example .env
 *(The default `.env` is pre-configured for localhost out of the box).*
 
 ### 3. Zero-Config Launch (Auto-Initialized SQLite)
-On first launch, YOUPI PG automatically provisions `data/youpi_pg.sqlite`, creates the directory if missing, and executes idempotent migrations and baseline seeds. No manual database setup is required:
+On first launch, Apna.ai automatically provisions `data/youpi_pg.sqlite`, creates the directory if missing, and executes idempotent migrations and baseline seeds. No manual database setup is required:
 ```bash
 npm run dev
 # or
@@ -211,7 +211,7 @@ npm start
 That's it! Your entire gateway cluster will spin up:
 - 🎛️ **Control Center Supervisor:** [`http://localhost:8090`](http://localhost:8090)
 - 📊 **Merchant Admin Panel:** [`http://localhost:6001`](http://localhost:6001)
-- 🛒 **YOUPI Showcase Demo Store:** [`http://localhost:5000`](http://localhost:5000)
+- 🛒 **Apna Showcase Demo Store:** [`http://localhost:5000`](http://localhost:5000)
 - ⚡ **Payment REST API:** [`http://localhost:6100`](http://localhost:6100)
 - 💳 **Customer Checkout Portal:** [`http://localhost:7000`](http://localhost:7000)
 
@@ -222,7 +222,7 @@ npm test
 ```
 ```text
 ============================================================
-🧪 YOUPI PG V2 — FULL REGRESSION TEST RUNNER
+🧪 Apna.ai — FULL REGRESSION TEST RUNNER
 Running 31 curated test suites...
 ============================================================
 [1/31] Testing packages/common/src/__tests__/common.test.js... ✅ PASS (0.22s)
@@ -239,32 +239,32 @@ Running 31 curated test suites...
 
 ## 📦 Universal Merchant Integration
 
-Integrating YOUPI PG into your website, web app, or e-commerce store takes less than 5 minutes.
+Integrating Apna.ai into your website, web app, or e-commerce store takes less than 5 minutes.
 
 ### Step 1: Add the Universal Script to your `<head>`
 ```html
-<!-- Official YOUPI PG Universal Integration Script -->
-<script src="https://pay.yourdomain.com/youpi.js" 
-        data-youpi-key="YOUR_MERCHANT_PUBLIC_KEY" 
+<!-- Official Apna.ai Universal Integration Script -->
+<script src="https://pay.yourdomain.com/Apna.js"
+        data-apna-key="YOUR_MERCHANT_PUBLIC_KEY"
         data-currency="INR">
 </script>
 ```
 
 ### Step 2: Declarative Button (Zero JavaScript Required!)
-Add `data-youpi-pay` attributes to any existing HTML button:
+Add `data-apna-pay` attributes to any existing HTML button:
 ```html
-<button data-youpi-pay
+<button data-apna-pay
         data-order-id="ORDER-1001"
         data-amount="499.00"
         data-currency="INR">
-  ⚡ Buy Now with YOUPI PG
+  ⚡ Buy Now with Apna.ai
 </button>
 ```
 *The script automatically intercepts the click, opens a centered desktop modal (or mobile slide-up bottom sheet), and launches the checkout session!*
 
 ### Step 3: Programmatic API (For React, Vue, Next.js, Nuxt)
 ```javascript
-window.Youpi.pay({
+window.Apna.pay({
   order_id: 'ORDER-1001',
   amount: 499.00,
   currency: 'INR',
@@ -301,7 +301,7 @@ window.Youpi.pay({
 ```javascript
 import crypto from 'node:crypto';
 
-app.post('/api/youpi-webhook', express.raw({ type: 'application/json' }), (req, res) => {
+app.post('/api/Apna-webhook', express.raw({ type: 'application/json' }), (req, res) => {
   const signature = req.headers['x-gateway-signature'] || '';
   const secret = process.env.YOUPI_WEBHOOK_SECRET;
   const expected = 'sha256=' + crypto.createHmac('sha256', secret).update(req.body).digest('hex');
@@ -326,7 +326,7 @@ from fastapi import FastAPI, Request, HTTPException
 
 app = FastAPI()
 
-@app.post("/api/youpi-webhook")
+@app.post("/api/Apna-webhook")
 async def youpi_webhook(request: Request):
     raw_body = await request.body()
     signature = request.headers.get("X-Gateway-Signature", "")
@@ -423,7 +423,7 @@ func youpiWebhookHandler(w http.ResponseWriter, r *http.Request) {
 
 ## 🔭 Tri-Channel Observation Mesh
 
-YOUPI PG confirms payments without expensive commercial banking APIs using a triple-layer observation pipeline:
+Apna.ai confirms payments without expensive commercial banking APIs using a triple-layer observation pipeline:
 
 ```text
               CUSTOMER SCANS & PAYS VIA UPI

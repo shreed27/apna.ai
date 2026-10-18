@@ -203,16 +203,16 @@ export function createPairingPayload(options = {}) {
  */
 export function validatePairingPayload(payload) {
   if (!payload || typeof payload !== 'object') {
-    return { valid: false, error: 'INVALID YOUPI PAIRING QR' };
+    return { valid: false, error: 'INVALID Apna PAIRING QR' };
   }
   if (payload.type !== 'YOUPI_SMS_GATEWAY_PAIR') {
-    return { valid: false, error: 'INVALID YOUPI PAIRING QR' };
+    return { valid: false, error: 'INVALID Apna PAIRING QR' };
   }
   if (payload.version !== 'v1') {
-    return { valid: false, error: 'INVALID YOUPI PAIRING QR VERSION' };
+    return { valid: false, error: 'INVALID Apna PAIRING QR VERSION' };
   }
   if (!payload.serverUrl || !payload.token || !payload.sessionId) {
-    return { valid: false, error: 'MALFORMED YOUPI PAIRING QR: Missing required fields' };
+    return { valid: false, error: 'MALFORMED Apna PAIRING QR: Missing required fields' };
   }
   if (!payload.serverUrl.startsWith('http://') && !payload.serverUrl.startsWith('https://')) {
     return { valid: false, error: 'INVALID SERVER URL PROTOCOL' };

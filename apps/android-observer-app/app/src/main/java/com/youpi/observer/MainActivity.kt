@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val title = TextView(this).apply {
-            text = "YOUPI Payment Observer"
+            text = "Apna Payment Observer"
             textSize = 22f
             setTypeface(null, android.graphics.Typeface.BOLD)
         }

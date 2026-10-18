@@ -4,25 +4,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#f7f6f1" />
   <title>{{MERCHANT_NAME}} · {{APP_NAME}} Checkout</title>
   <style>
     :root {
-      --ypg-blue: #0b63e5;
-      --ypg-blue-dark: #0957cb;
-      --ypg-navy: #0b1526;
-      --ypg-header-gradient: linear-gradient(180deg, #0b63e5 0%, #0957cb 100%);
-      --ypg-bg: #f8fafc;
+      --ypg-blue: #244bd0;
+      --ypg-blue-dark: #193dad;
+      --ypg-navy: #17233f;
+      --ypg-header-gradient: linear-gradient(180deg, #244bd0 0%, #1d43bd 100%);
+      --ypg-bg: #f7f6f1;
       --ypg-card: #ffffff;
       --ypg-text-dark: #0f172a;
       --ypg-text-muted: #64748b;
-      --ypg-border: #e2e8f0;
-      --ypg-border-light: #eef2f6;
-      --ypg-green: #0d9f67;
-      --ypg-green-bg: #e6f9f0;
-      --ypg-offer-bg: #eff6ff;
-      --ypg-offer-border: #dbeafe;
+      --ypg-border: #e8e8e1;
+      --ypg-border-light: #f0f0eb;
+      --ypg-green: #16804d;
+      --ypg-green-bg: #edf8f0;
+      --ypg-offer-bg: #f0f3ff;
+      --ypg-offer-border: #dce3ff;
       --ypg-danger: #ef4444;
-      --ypg-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --ypg-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * {
@@ -50,7 +51,7 @@
     }
 
     body {
-      background-color: #0b0f19;
+      background-color: #f7f6f1;
       color: var(--ypg-text-dark);
       min-height: 100vh;
       min-height: 100dvh;
@@ -74,7 +75,7 @@
       overflow: hidden;
     }
 
-    /* --- YOUPI PG CARD / DRAWER CONTAINER --- */
+    /* --- Apna.ai CARD / DRAWER CONTAINER --- */
     .ypg-wrapper {
       width: 100%;
       max-width: 440px;
@@ -82,7 +83,8 @@
       background: #ffffff;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(23, 35, 63, .08);
+      box-shadow: 0 22px 56px rgba(23, 35, 63, 0.16);
       position: relative;
       overflow: hidden;
     }
@@ -130,7 +132,7 @@
       }
     }
 
-    /* --- 1. INITIAL LOADING SPLASH SCREEN (YOUPI PG EMBLEM) --- */
+    /* --- 1. INITIAL LOADING SPLASH SCREEN (Apna.ai EMBLEM) --- */
     .ypg-splash-screen {
       position: absolute;
       top: 0;
@@ -193,7 +195,7 @@
       position: absolute;
       width: 12px;
       height: 12px;
-      background: #0b63e5;
+      background: #244bd0;
       border: 2px solid #ffffff;
       border-radius: 50%;
       top: 8px;
@@ -223,7 +225,7 @@
       color: #64748b;
     }
 
-    /* --- 2. AUTHENTIC YOUPI PG HEADER --- */
+    /* --- 2. AUTHENTIC Apna.ai HEADER --- */
     .ypg-header {
       background: var(--ypg-header-gradient);
       color: #ffffff;
@@ -311,7 +313,7 @@
       line-height: 1.25;
     }
 
-    /* YouPI PG Verified Business Badge */
+    /* Apna.ai Verified Business Badge */
     .ypg-trusted-badge {
       display: flex;
       align-items: center;
@@ -1988,7 +1990,7 @@
       border-radius: 10px;
       font-size: 14px;
       font-weight: 700;
-      color: #0b63e5;
+      color: #244bd0;
       cursor: pointer;
       margin-top: 14px;
       transition: all 0.2s;
@@ -2221,7 +2223,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #0b0f19;
+        background-color: #f7f6f1;
       }
 
       body:not(.is-embedded) {
@@ -2271,7 +2273,7 @@
         min-width: 310px;
         max-width: 310px;
         height: 100%;
-        background: linear-gradient(180deg, var(--ypg-blue, #0b63e5) 0%, var(--ypg-blue-dark, #0854c6) 100%);
+        background: linear-gradient(180deg, var(--ypg-blue, #244bd0) 0%, var(--ypg-blue-dark, #193dad) 100%);
         padding: 22px 20px;
         display: flex !important;
         flex-direction: column;
@@ -2586,9 +2588,9 @@
       }
 
       .ypg-pc-method-card.is-active {
-        border-color: var(--ypg-blue, #0b63e5);
+        border-color: var(--ypg-blue, #244bd0);
         background: #eff6ff;
-        box-shadow: 0 0 0 1px var(--ypg-blue, #0b63e5);
+        box-shadow: 0 0 0 1px var(--ypg-blue, #244bd0);
       }
 
       .ypg-pc-method-card.disabled {
@@ -3049,16 +3051,16 @@
   <!-- TOAST NOTIFICATION -->
   <div id="ypgToast" class="ypg-toast"><img src="/icons/upi.svg" alt="UPI" style="height:12px; vertical-align:middle; filter:brightness(0) invert(1); margin-right:4px;" /> Direct UPI QR is active for instant banking verification</div>
 
-  <!-- YOUPI PG CHECKOUT CARD / DRAWER WRAPPER -->
+  <!-- Apna.ai CHECKOUT CARD / DRAWER WRAPPER -->
   <div class="ypg-wrapper">
 
-    <!-- 1. INITIAL YOUPI PG LOADING SPLASH -->
+    <!-- 1. INITIAL Apna.ai LOADING SPLASH -->
     <div id="ypgSplashScreen" class="ypg-splash-screen">
       <div class="ypg-splash-center">
         <div class="ypg-shield-orbit-box">
           <img id="splashBrandLogo" alt="Logo"
             style="display:none; max-width:82px; max-height:82px; border-radius:16px; object-fit:contain; box-shadow:0 8px 24px rgba(0,0,0,0.12);" />
-          <!-- Authentic YouPI PG Shield with 'Y' Monogram -->
+          <!-- Authentic Apna.ai Shield with 'Y' Monogram -->
           <svg class="ypg-shield-icon-svg" id="splashDefaultShield" viewBox="0 0 100 120" fill="none">
             <defs>
               <linearGradient id="ypgShieldGrad" x1="0" y1="0" x2="1" y2="1">
@@ -3076,7 +3078,7 @@
       </div>
       <div class="ypg-splash-footer" id="splashFooterWrap">
         <span>Secured By</span>
-        <strong id="splashSecuredByText" style="color:var(--ypg-blue); font-size:15px; letter-spacing:-0.2px;">YouPI
+        <strong id="splashSecuredByText" style="color:var(--ypg-blue); font-size:15px; letter-spacing:-0.2px;">Apna
           PG</strong>
       </div>
     </div>
@@ -3099,7 +3101,7 @@
                 <path d="M8.5 12l2.5 2.5 5-5" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
                   stroke-linejoin="round" />
               </svg>
-              <span id="pcTrustBadgeText">YouPI PG Trusted Business</span>
+              <span id="pcTrustBadgeText">Apna.ai Trusted Business</span>
             </div>
           </div>
         </div>
@@ -3184,7 +3186,7 @@
         </div>
       </div>
 
-      <!-- 2. AUTHENTIC YOUPI PG HEADER -->
+      <!-- 2. AUTHENTIC Apna.ai HEADER -->
       <header class="ypg-header">
         <!-- Mobile Top Drag Handle -->
         <div class="ypg-drag-handle-bar"></div>
@@ -3206,7 +3208,7 @@
               <img id="merchantAvatarImg" alt="Logo" style="display:none;" />
             </div>
 
-            <!-- Merchant Name & YouPI PG Verified Business Badge -->
+            <!-- Merchant Name & Apna.ai Verified Business Badge -->
             <div class="ypg-merchant-text-group">
               <div class="ypg-merchant-name" id="headerMerchantName">{{MERCHANT_NAME}}</div>
               <div class="ypg-trusted-badge" id="headerTrustBadge">
@@ -3215,7 +3217,7 @@
                   <path d="M8.5 12l2.5 2.5 5-5" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"
                     stroke-linejoin="round" />
                 </svg>
-                <span id="headerTrustBadgeText">YouPI PG Verified Business</span>
+                <span id="headerTrustBadgeText">Apna.ai Verified Business</span>
               </div>
             </div>
           </div>
@@ -3239,7 +3241,7 @@
             <circle cx="20" cy="21" r="1" />
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
           </svg>
-          <span id="subbannerText">200+ orders verified this month by YouPI PG</span>
+          <span id="subbannerText">200+ orders verified this month by Apna.ai</span>
         </div>
 
         <!-- Account Popover Menu -->
@@ -3312,7 +3314,7 @@
               </div>
 
               <div style="font-size:12.5px; color:var(--ypg-text-dark); font-weight:600; margin-bottom:12px;">
-                New to YOUPI PG? Please enter your name and email to proceed:
+                New to Apna.ai? Please enter your name and email to proceed:
               </div>
 
               <div class="ypg-input-group">
@@ -3769,7 +3771,7 @@
                   <div class="ypg-success-title" id="successTitleText">Payment Successful!</div>
                   <div class="ypg-success-amount" id="successAmountVal">₹{{AMOUNT}}</div>
                   <div style="font-size:12px; color:var(--ypg-text-muted); margin-bottom:14px;" id="successDescText">
-                    Your payment was automatically verified by YouPI PG banking observers.
+                    Your payment was automatically verified by Apna.ai banking observers.
                   </div>
                   <div id="successCodDevApiBox"
                     style="display:none; font-size:11.5px; background:#f1f5f9; padding:10px 14px; border-radius:8px; margin-bottom:14px; text-align:left; border:1px solid #e2e8f0;">
@@ -3903,7 +3905,7 @@
 
         <!-- Legal Disclaimer -->
         <div class="ypg-legal-disclaimer" id="footerLegalDisclaimer">
-          Secured by YouPI PG & 256-Bit Bank Encryption &bull; <span style="text-decoration:underline; cursor:pointer;"
+          Secured by Apna.ai & 256-Bit Bank Encryption &bull; <span style="text-decoration:underline; cursor:pointer;"
             onclick="openHelpModal()">Privacy Notice</span>
         </div>
 
@@ -3957,7 +3959,7 @@
     <div class="ypg-dialog-overlay" id="helpModal" hidden>
       <div class="ypg-dialog-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <strong style="font-size:15px;" id="helpModalTitle">YouPI PG Help &amp; Support</strong>
+          <strong style="font-size:15px;" id="helpModalTitle">Apna.ai Help &amp; Support</strong>
           <button type="button" onclick="closeHelpModal()"
             style="background:none; border:none; font-size:18px; cursor:pointer; color:#64748b;">✕</button>
         </div>
@@ -4139,6 +4141,8 @@
   <script>
     const PAYMENT_ID = "{{PAYMENT_ID}}";
     const API_BASE = "{{API_BASE_URL}}";
+    const DEFAULT_STORE_URL = {{DEFAULT_STORE_URL_JSON}};
+    const CHECKOUT_PORTAL_PORT = {{CHECKOUT_PORTAL_PORT}};
 
     let state = null;
     let countdownTimer = null;
@@ -4147,9 +4151,9 @@
     let activeCustomer = null;
     let activeToken = null;
 
-    const STORAGE_KEY_IDENTITY = 'youpi.customer.identity';
-    const STORAGE_KEY_ACCOUNTS = 'youpi.customer.accounts';
-    const STORAGE_KEY_ACTIVE = 'youpi.customer.activeId';
+    const STORAGE_KEY_IDENTITY = 'Apna.customer.identity';
+    const STORAGE_KEY_ACCOUNTS = 'Apna.customer.accounts';
+    const STORAGE_KEY_ACTIVE = 'Apna.customer.activeId';
     const MAX_IDENTITY_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days (maximum 1 week)
 
     function getPreservedIdentity() {
@@ -4223,7 +4227,7 @@
     if (window.parent !== window || location.search.includes('embedded=1')) {
       document.body.classList.add('is-embedded');
       try {
-        window.parent.postMessage({ event: 'youpi.modal_ready', paymentId: PAYMENT_ID }, '*');
+        window.parent.postMessage({ event: 'Apna.modal_ready', paymentId: PAYMENT_ID }, '*');
       } catch (e) { }
     }
 
@@ -4289,6 +4293,13 @@
 
     // Store return URL resolver (used when user cancels payment or returns to merchant store)
     function getStoreReturnUrl() {
+      const isLocalHostname = (hostname) => hostname === 'localhost' || hostname === '127.0.0.1';
+      const isLocalCheckoutHost = isLocalHostname(window.location.hostname);
+      const currentPort = Number(window.location.port || (window.location.protocol === 'https:' ? 443 : 80));
+      const currentStoreOrigin = isLocalCheckoutHost && currentPort !== CHECKOUT_PORTAL_PORT
+        ? `${window.location.origin}/`
+        : '';
+
       if (typeof state !== 'undefined' && state) {
         if (state.cancelUrl) {
           return state.cancelUrl;
@@ -4296,6 +4307,12 @@
         if (state.returnUrl) {
           try {
             const parsed = new URL(state.returnUrl);
+            // Old local sessions may still contain localhost:5000. When checkout
+            // is being served through the demo store's current local port, prefer
+            // that live origin so the return link follows the running store.
+            if (isLocalHostname(parsed.hostname) && currentStoreOrigin) {
+              return currentStoreOrigin;
+            }
             return parsed.origin ? `${parsed.origin}/` : state.returnUrl;
           } catch (e) { }
         }
@@ -4314,14 +4331,17 @@
         try {
           const refUrl = new URL(document.referrer);
           if (refUrl.host !== window.location.host) {
+            if (isLocalHostname(refUrl.hostname) && currentStoreOrigin) {
+              return currentStoreOrigin;
+            }
             return `${refUrl.origin}/`;
           }
         } catch (e) { }
       }
-      if (window.location.port === '7000' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-        return 'http://localhost:5000/';
+      if (currentStoreOrigin) {
+        return currentStoreOrigin;
       }
-      return '/';
+      return DEFAULT_STORE_URL || '/';
     }
 
     // Retry / Close on Expired or Failed session
@@ -4336,7 +4356,7 @@
       if (isEmbedded) {
         try {
           window.parent.postMessage({
-            event: 'youpi.payment_failed',
+            event: 'Apna.payment_failed',
             data: {
               orderId,
               reason,
@@ -4355,7 +4375,7 @@
         // Fallback postMessage in case parent container only listens for modal_close
         try {
           window.parent.postMessage({
-            event: 'youpi.modal_close',
+            event: 'Apna.modal_close',
             action: 'payment_failed',
             redirectUrl: failRedirectUrl
           }, '*');
@@ -5451,7 +5471,7 @@
           publicKeyBase64 = btoa(`fallback-device-key-${Math.random()}-${Date.now()}`);
         }
 
-        // 4. Register with YouPI backend
+        // 4. Register with Apna backend
         const signals = this.collectSignals();
         try {
           const resp = await fetch(`${API_BASE}/api/v1/devices/register`, {
@@ -5550,7 +5570,7 @@
 
     function applyDynamicTheme(branding) {
       if (!branding) return;
-      const primary = branding.primaryColor || '#0b63e5';
+      const primary = branding.primaryColor || '#244bd0';
       const darkPrimary = adjustHexColor(primary, -25);
       const root = document.documentElement;
 
@@ -5594,7 +5614,7 @@
     function renderState(data) {
       state = data;
       const b = data.branding || {};
-      const appName = b.appName || 'YouPI PG';
+      const appName = b.appName || 'Apna.ai';
       const merchantName = data.merchantName || 'Merchant Checkout';
 
       // 1. Dynamic Title
@@ -5837,7 +5857,7 @@
         if (splashDefaultShield) splashDefaultShield.style.display = 'none';
       }
       if (splashSecuredText) {
-        splashSecuredText.textContent = b.hidePoweredBy ? (b.appName || '256-Bit Bank Encryption') : (b.appName || 'YouPI PG');
+        splashSecuredText.textContent = b.hidePoweredBy ? (b.appName || '256-Bit Bank Encryption') : (b.appName || 'Apna.ai');
       }
 
       // 12. Legal Disclaimer Strip
@@ -5914,10 +5934,10 @@
               const isEmbedded = (window.parent && window.parent !== window) || location.search.includes('embedded=1');
               if (isEmbedded) {
                 try {
-                  window.parent.postMessage({ event: 'youpi.modal_close', redirectUrl: storeUrl }, '*');
-                  window.parent.postMessage({ event: 'youpi.close', redirectUrl: storeUrl }, '*');
-                  window.parent.postMessage({ event: 'youpi.cancel', redirectUrl: storeUrl }, '*');
-                  window.parent.postMessage({ event: 'youpi.payment_cancelled', redirectUrl: storeUrl }, '*');
+                  window.parent.postMessage({ event: 'Apna.modal_close', redirectUrl: storeUrl }, '*');
+                  window.parent.postMessage({ event: 'Apna.close', redirectUrl: storeUrl }, '*');
+                  window.parent.postMessage({ event: 'Apna.cancel', redirectUrl: storeUrl }, '*');
+                  window.parent.postMessage({ event: 'Apna.payment_cancelled', redirectUrl: storeUrl }, '*');
                 } catch (e) {}
               } else if (storeUrl && storeUrl !== '#' && !storeUrl.startsWith('javascript:')) {
                 window.location.href = storeUrl;
@@ -5988,7 +6008,7 @@
             }
           } else {
             if (titleEl) titleEl.textContent = 'Payment Successful!';
-            if (descEl) descEl.textContent = 'Your payment was automatically verified by YouPI PG banking observers.';
+            if (descEl) descEl.textContent = 'Your payment was automatically verified by Apna.ai banking observers.';
             if (codApiBox) codApiBox.style.display = 'none';
           }
 
@@ -5996,7 +6016,7 @@
 
           try {
             window.parent.postMessage({
-              event: 'youpi.payment_success',
+              event: 'Apna.payment_success',
               data: data
             }, '*');
           } catch (e) { }
@@ -6414,10 +6434,10 @@
 
         if (isEmbedded) {
           try {
-            window.parent.postMessage({ event: 'youpi.modal_close', redirectUrl: storeUrl }, '*');
-            window.parent.postMessage({ event: 'youpi.close', redirectUrl: storeUrl }, '*');
-            window.parent.postMessage({ event: 'youpi.cancel', redirectUrl: storeUrl }, '*');
-            window.parent.postMessage({ event: 'youpi.payment_cancelled', redirectUrl: storeUrl }, '*');
+            window.parent.postMessage({ event: 'Apna.modal_close', redirectUrl: storeUrl }, '*');
+            window.parent.postMessage({ event: 'Apna.close', redirectUrl: storeUrl }, '*');
+            window.parent.postMessage({ event: 'Apna.cancel', redirectUrl: storeUrl }, '*');
+            window.parent.postMessage({ event: 'Apna.payment_cancelled', redirectUrl: storeUrl }, '*');
           } catch (e) { }
         }
 
@@ -6432,7 +6452,7 @@
 
     // Listen for cancel requests from parent iframe cross button
     window.addEventListener('message', (e) => {
-      if (e.data && e.data.event === 'youpi.request_cancel') {
+      if (e.data && (e.data.event === 'Apna.request_cancel' || e.data.event === 'youpi.request_cancel')) {
         openCancelPaymentModal();
       }
     });
@@ -6563,7 +6583,7 @@
 
       try {
         window.parent.postMessage({
-          event: 'youpi.payment_blocked',
+          event: 'Apna.payment_blocked',
           data: {
             status: 'BLOCKED',
             isBanned: true,
@@ -6579,7 +6599,7 @@
       if (window.parent && window.parent !== window) {
         try {
           window.parent.postMessage({
-            event: 'youpi.payment_blocked_exit',
+            event: 'Apna.payment_blocked_exit',
             data: { status: 'BLOCKED', isBanned: true, orderId: state?.orderId }
           }, '*');
         } catch (e) {}

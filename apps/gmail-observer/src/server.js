@@ -67,7 +67,7 @@ export class GmailObserverServer {
         if (!clientId) {
           clientId = (this.poller.credentials?.clientId)
             ? this.poller.credentials.clientId
-            : (process.env.GMAIL_CLIENT_ID || 'mock-youpi-client-id.apps.googleusercontent.com');
+            : (process.env.GMAIL_CLIENT_ID || 'mock-Apna-client-id.apps.googleusercontent.com');
         }
 
         const finalRedirectUri = 'https://pay-gmail.gauravtesting.online/oauth/callback';
@@ -215,7 +215,7 @@ export class GmailObserverServer {
             <html>
             <head>
               <meta charset="utf-8">
-              <title>YOUPI PG — Google Connected</title>
+              <title>Apna.ai — Google Connected</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <style>
                 * { box-sizing: border-box; }

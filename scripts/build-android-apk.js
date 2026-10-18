@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 
-console.log('🚀 Starting certified Android APK compilation for YouPI SMS Gateway...');
+console.log('🚀 Starting certified Android APK compilation for Apna SMS Observer...');
 
 // Resolve Toolchain Paths
 const JDK_DIR = 'C:\\Program Files\\Microsoft\\jdk-17.0.20.101-hotspot\\bin';
@@ -24,7 +24,7 @@ const ANDROID_JAR = 'C:\\Users\\gaura\\scoop\\apps\\android-clt\\current\\platfo
 const APP_DIR = path.resolve(REPO_ROOT, 'apps/android-observer-app/app');
 const MANIFEST = path.resolve(APP_DIR, 'src/main/AndroidManifest.xml');
 const RES_DIR = path.resolve(APP_DIR, 'src/main/res');
-const JAVA_DIR = path.resolve(APP_DIR, 'src/main/java/com/youpi/observer');
+const JAVA_DIR = path.resolve(APP_DIR, 'src/main/java/com/Apna/observer');
 
 const WORK_DIR = path.resolve(REPO_ROOT, '.tmp_apk_build');
 if (fs.existsSync(WORK_DIR)) {
@@ -109,7 +109,7 @@ try {
   const ksPass = 'youpipg123';
   const alias = 'youpi_gateway';
 
-  execSync(`"${KEYTOOL}" -genkeypair -v -keystore "${keystorePath}" -alias "${alias}" -keyalg RSA -keysize 2048 -validity 10000 -storepass "${ksPass}" -keypass "${ksPass}" -dname "CN=YouPI SMS Gateway, OU=Merchant Payments, O=YouPI PG, L=Mumbai, ST=MH, C=IN"`, {
+  execSync(`"${KEYTOOL}" -genkeypair -v -keystore "${keystorePath}" -alias "${alias}" -keyalg RSA -keysize 2048 -validity 10000 -storepass "${ksPass}" -keypass "${ksPass}" -dname "CN=Apna SMS Observer, OU=Merchant Payments, O=Apna.ai, L=Mumbai, ST=MH, C=IN"`, {
     stdio: 'pipe'
   });
 

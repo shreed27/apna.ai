@@ -24,7 +24,7 @@ export function ensureDatabaseInitialized(db) {
 }
 
 /**
- * Universal Database Client for YOUPI PG.
+ * Universal Database Client for Apna.ai.
  * Uses native node:sqlite for high-performance, embedded zero-dependency local operation
  * with full transactional ACID guarantees.
  */

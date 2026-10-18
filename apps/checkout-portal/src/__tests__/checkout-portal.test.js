@@ -104,16 +104,16 @@ describe('Checkout Portal Integration Tests', () => {
       assert.ok(resPhonePe.headers['content-type'].includes('image/png'));
     });
 
-    test('GET /youpi.js and /sdk/youpi-checkout.js return official integration SDK with CORS', async () => {
-      const resYoupi = await get('/youpi.js');
+    test('GET /Apna.js and /sdk/Apna-checkout.js return official integration SDK with CORS', async () => {
+      const resYoupi = await get('/Apna.js');
       assert.equal(resYoupi.status, 200);
       assert.ok(resYoupi.headers['content-type'].includes('application/javascript'));
       assert.equal(resYoupi.headers['access-control-allow-origin'], '*');
       assert.ok(resYoupi.text.includes('YoupiCheckout'));
-      assert.ok(resYoupi.text.includes('data-youpi-pay'));
-      assert.ok(resYoupi.text.includes('youpi:payment:success'));
+      assert.ok(resYoupi.text.includes('data-apna-pay'));
+      assert.ok(resYoupi.text.includes('Apna:payment:success'));
 
-      const resLegacy = await get('/sdk/youpi-checkout.js');
+      const resLegacy = await get('/sdk/Apna-checkout.js');
       assert.equal(resLegacy.status, 200);
       assert.ok(resLegacy.headers['content-type'].includes('application/javascript'));
       assert.equal(resLegacy.headers['access-control-allow-origin'], '*');

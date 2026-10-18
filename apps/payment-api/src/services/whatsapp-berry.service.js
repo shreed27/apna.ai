@@ -19,7 +19,7 @@ async function loadDependencies() {
       pathToFileURL(path.resolve(rootDir, 'apps/payment-api/node_modules/berryprotocol/dist/index.js')).href,
       'file:///D:/WA-USERAUTH DEV/node_modules/berryprotocol/dist/index.js',
       'file:///D:/E-Commerce PKG/services/whatsapp-worker/node_modules/berryprotocol/dist/index.js',
-      'file:///D:/ECOM AND YOUPI PG INTEGRATION/E-Commerce PACKAGE/services/whatsapp-worker/node_modules/berryprotocol/dist/index.js',
+      'file:///D:/ECOM AND Apna.ai INTEGRATION/E-Commerce PACKAGE/services/whatsapp-worker/node_modules/berryprotocol/dist/index.js',
       'file:///D:/distribution/services/whatsapp-worker/node_modules/berryprotocol/dist/index.js'
     ];
     for (const p of candidates) {
@@ -40,7 +40,7 @@ async function loadDependencies() {
       pathToFileURL(path.resolve(rootDir, 'apps/payment-api/node_modules/qrcode/lib/index.js')).href,
       'file:///D:/WA-USERAUTH DEV/node_modules/qrcode/lib/index.js',
       'file:///D:/E-Commerce PKG/services/whatsapp-worker/node_modules/qrcode/lib/index.js',
-      'file:///D:/ECOM AND YOUPI PG INTEGRATION/E-Commerce PACKAGE/services/whatsapp-worker/node_modules/qrcode/lib/index.js',
+      'file:///D:/ECOM AND Apna.ai INTEGRATION/E-Commerce PACKAGE/services/whatsapp-worker/node_modules/qrcode/lib/index.js',
       'file:///D:/distribution/services/whatsapp-worker/node_modules/qrcode/lib/index.js'
     ];
     for (const p of qrCandidates) {
@@ -626,10 +626,10 @@ export class WhatsAppBerryService extends EventEmitter {
   async sendOtp(to, otpCode, customerName = '') {
     const greeting = customerName ? `Hello *${customerName}*!` : 'Hello!';
     const message =
-      `🔐 *YOUPI PG Verification Code*\n\n` +
+      `🔐 *Apna.ai Verification Code*\n\n` +
       `${greeting} Your one-time login OTP is: *${otpCode}*\n\n` +
       `⏱ _Valid for 5 minutes. Do not share this code with anyone._\n\n` +
-      `— *YOUPI PG Secure Payments*`;
+      `— *Apna.ai Secure Payments*`;
 
     return this.sendMessage(to, message);
   }
